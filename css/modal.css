@@ -11,6 +11,10 @@
 
   --input-bg-color--valid: rgb(0, 67, 0);
   --input-outline-color--valid: limegreen;
+
+  --input-text-color: white;
+
+  --button-bg-color--invalid: grey;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,6 +54,7 @@ p {
 img {
   padding-right: 1rem;
 }
+
 
 .topnav {
   overflow: hidden;
@@ -187,6 +192,8 @@ main {
   background: #3876ac;
 }
 
+
+
 .smFont {
   font-size: 16px;
 }
@@ -243,34 +250,6 @@ input {
   font-size: 20px;
   height: 48px;
 }
-
-.formData[data-error]::after {
-  content: attr(data-error);
-  font-size: 0.4em;
-  color: #e54858;
-  display: block;
-  margin-top: 7px;
-  margin-bottom: 7px;
-  text-align: right;
-  line-height: 0.3;
-  opacity: 0;
-  transition: 0.3s;
-}
-
-.formData[data-error-visible="true"]::after {
-  opacity: 1;
-}
-
-.formData[data-error-visible="true"] .text-control {
-  border: 2px solid #e54858;
-}
-
-/* 
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
 
 
 .checkbox-label,
@@ -376,7 +355,7 @@ input[data-error]::after {
 
 .btn-submit,
 .btn-signup {
-  background: #fe142f;
+  background-color: #fe142f;
   display: block;
   margin: 0 auto;
   border-radius: 7px;
@@ -385,6 +364,14 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+
+.btn-submit:disabled {
+  background-color: var(--button-bg-color--invalid);
+}
+
+.btn-submit:disabled:hover {
+  cursor: not-allowed;
 }
 
 /* custom select styles */
@@ -606,8 +593,16 @@ footer {
   }
 }
 
+
+/*
+Classes ajoutées par Younes LAHOUITI
+*/
 .hide {
   display: none !important;
+}
+
+.show {
+  display: block !important;
 }
 
 .show-center-flex {
@@ -629,10 +624,23 @@ footer {
   outline: 2px solid var(--input-outline-color--invalid);
   outline-offset: -5px;
   background-color: var(--input-bg-color--invalid);
+  color: var(--input-text-color)
 }
 
 .valid-input {
   outline: 2px solid var(--input-outline-color--valid);
   outline-offset: -5px;
   background-color: var(--input-bg-color--valid) !important;
+  color: var(--input-text-color)
+}
+
+.error-msg {
+  border-radius: 10px;
+  background-color: var(--input-outline-color--invalid);
+  padding-left: 15px;
+  font-size: 14px;
+}
+
+.error-form-data-bg {
+  background-color: var(--input-bg-color--invalid);
 }
