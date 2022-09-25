@@ -66,9 +66,11 @@ for (radioButton of radioButtonsArray) {
 let valueOfFirstName = "";
 let valueOfLastName = "";
 let valueOfEmail = "";
-let valueOfDateOfBirth = 0;
+let valueOfDateOfBirth = new Date(0);
 let valueOfQuantity = 0;
 let valueOfLocation = "";
+
+let atLeastOneRadioButtonIsChecked = 0;
 
 //Using global values to avoid local scope related issues
 let difference = 0;
@@ -76,7 +78,7 @@ let ageOfUserInYears = 0;
 let isUserOverEighteen = false;
 
 let emailRegex =
-  /^([a-z A-Z 0-9\.-]+)@([a-z A-Z 0-9]+)\.([a-z]{2,8})(.[a-z]{2,8})?$/;
+  /^([a-z A-Z 0-9\.-]+)@([a-z A-Z 0-9]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
 
 const formDataValidation = {
   first: false,
@@ -88,7 +90,8 @@ const formDataValidation = {
 };
 
 for (input of inputsArray) {
-  input.addEventListener("input", handleInputs);
+  input.addEventListener("change", handleInputs);
+  input.addEventListener("blur", handleInputs);
 }
 
 function handleInputs() {
@@ -151,8 +154,8 @@ function verifyName(inputElement, nameAttributeOfInput) {
   if (inputIsFilled && inputIsOverTwoCharactersLong) {
     changeInputStyle(inputElement, "invalid-input", "valid-input");
     nameAttributeOfInput === "first"
-      ? (formDataValidation.first = true)
-      : (formDataValidation.last = true);
+      ? (formDataValidation.first = true) & (valueOfFirstName = valueOfInput)
+      : (formDataValidation.last = true) & (valueOfLastName = valueOfInput);
     inputElement.setCustomValidity("");
   } else {
     changeInputStyle(inputElement, "valid-input", "invalid-input");
@@ -179,6 +182,7 @@ function verifyEmail(inputElement) {
   } else {
     changeInputStyle(inputElement, "valid-input", "invalid-input");
     formDataValidation.email = false;
+    inputElement.setCustomValidity("Veuillez rentrer un email");
   }
 }
 
@@ -187,8 +191,7 @@ function verifyDateOfBirth(inputElement) {
   let inputIsFilled = valueOfInput !== null;
 
   if (inputIsFilled) {
-    valueOfDateOfBirth = valueOfInput;
-    difference = new Date().getTime() - valueOfDateOfBirth.getTime();
+    difference = new Date().getTime() - valueOfInput.getTime();
 
     ageOfUserInYears = difference / (1000 * 60 * 60 * 24 * 365.25);
 
@@ -211,6 +214,7 @@ function verifyDateOfBirth(inputElement) {
       );
       return;
     }
+    valueOfDateOfBirth = valueOfInput;
 
     formDataValidation.dateOfBirth = isUserOverEighteen;
     changeInputStyle(inputElement, "invalid-input", "valid-input");
@@ -237,24 +241,11 @@ function verifyQuantity(inputElement) {
   }
 }
 
+const locationErrorElement = document.querySelector(".error-msg");
 function verifyLocation(inputElement) {
   let valueOfInput = inputElement.value;
 
-  let isAtLeastOneRadioButtonClicked = 0;
-
-  for (radioButton of radioButtonsArray) {
-    if (radioButton.checked) {
-      isAtLeastOneRadioButtonClicked++;
-    }
-  }
-
-  if (isAtLeastOneRadioButtonClicked) {
-    formDataValidation.location = true;
-  } else {
-    formDataValidation.location = false;
-  }
-
-  console.log({ isAtLeastOneRadioButtonClicked });
+  console.log({ atLeastOneRadioButtonIsChecked });
 
   console.log(valueOfInput);
 }
@@ -280,6 +271,29 @@ function validate(e) {
   e.preventDefault();
 
   let result = [];
+
+  atLeastOneRadioButtonIsChecked = 0;
+  for (radioButton of radioButtonsArray) {
+    if (radioButton.checked) {
+      atLeastOneRadioButtonIsChecked++;
+      valueOfLocation = radioButton.value;
+    }
+  }
+
+  console.log({ atLeastOneRadioButtonIsChecked });
+
+  if (atLeastOneRadioButtonIsChecked) {
+    formDataValidation.location = true;
+    changeInputStyle(locationErrorElement, "show", "hide");
+    locationErrorElement.parentElement.classList.remove("error-form-data-bg");
+    locationErrorElement.textContent = "";
+  } else {
+    formDataValidation.location = false;
+    changeInputStyle(locationErrorElement, "hide", "show");
+    locationErrorElement.parentElement.classList.add("error-form-data-bg");
+    locationErrorElement.textContent = "Veuillez choisir une option";
+  }
+
   for (const prop in formDataValidation) {
     result.push(formDataValidation[prop]);
   }
@@ -296,7 +310,6 @@ function validate(e) {
   console.table(invalidInputsArray);
 
   if (!numberOfInvalidInputs) {
-    alert("Form data is valid!");
     let userInfos = new UserInfos(
       valueOfFirstName,
       valueOfLastName,
@@ -305,9 +318,35 @@ function validate(e) {
       valueOfQuantity,
       valueOfLocation
     );
-    //callAPI()
+
+    console.log(userInfos);
+    //callAPI(userInfos);
+    alert("Merci d'avoir rempli le formulaire!");
     return;
   } else {
-    alert("Invalid form");
+    alert("Attention, le formulaire est invalide!");
   }
 }
+
+/* 
+
+async function callAPI(data){
+  try{
+    let response = await fetch([URL API], {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if(response.ok){
+      window.location.href = [...]
+    }
+  }catch(apiError){
+    console.error(apiError);
+  }
+}
+
+*/
