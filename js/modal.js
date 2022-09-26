@@ -45,12 +45,31 @@ const emailInput = document.getElementById("email");
 const dateOfBirthInput = document.getElementById("birthdate");
 const quantityInput = document.getElementById("quantity");
 
+const checkboxesNodeList = document.querySelectorAll(
+  ".formData:nth-child(8)>input"
+);
+const checkboxesArray = Array.from(checkboxesNodeList);
+
+const locationErrorElement = document.querySelector(".error-msg");
+
+const submitButton = document.querySelector(".btn-submit");
+
+const validFormMessageElement = document.querySelector(".valid-form-message");
+
+const validFormCloseModalButton = document.querySelector(
+  ".close-modal-button.button"
+);
+
+const contentElement = document.querySelector(".content");
+
 let inputsArray = [
   firstNameInput,
   lastNameInput,
   emailInput,
   dateOfBirthInput,
   quantityInput,
+  checkboxesArray[0],
+  checkboxesArray[1],
 ];
 
 let radioButtonsNodeList = document.querySelectorAll(
@@ -87,7 +106,10 @@ const formDataValidation = {
   dateOfBirth: false,
   quantity: false,
   location: false,
+  knowMore: false,
 };
+
+validFormCloseModalButton.addEventListener("click", closeModal);
 
 for (input of inputsArray) {
   input.addEventListener("change", handleInputs);
@@ -135,10 +157,16 @@ function handleInputs() {
       break;
     }
 
-    case "location": {
-      console.log(this);
-      verifyLocation(this);
-      console.log("click");
+    // case "location": {
+    //   console.log(this);
+    //   verifyLocation(this);
+    //   console.log("click");
+    //   break;
+    // }
+
+    case "checkbox": {
+      console.log("Checkbox");
+      verifyTermsOfServiceCheckbox(this);
       break;
     }
   }
@@ -204,7 +232,7 @@ function verifyDateOfBirth(inputElement) {
     }
 
     isUserOverEighteen = ageOfUserInYears > 18;
-    console.log("The user is", ageOfUserInYears, "years old");
+    console.log("The user is", Math.trunc(ageOfUserInYears), "years old");
     console.log(isUserOverEighteen ? "User is an adult" : "User is underage");
 
     if (!isUserOverEighteen) {
@@ -241,13 +269,20 @@ function verifyQuantity(inputElement) {
   }
 }
 
-const locationErrorElement = document.querySelector(".error-msg");
-function verifyLocation(inputElement) {
-  let valueOfInput = inputElement.value;
-
-  console.log({ atLeastOneRadioButtonIsChecked });
-
-  console.log(valueOfInput);
+function verifyTermsOfServiceCheckbox(inputElement) {
+  let isInputChecked = inputElement.checked;
+  let checkboxToAcceptToS = inputElement.classList.contains(
+    "terms-of-service-checkbox"
+  );
+  if (checkboxToAcceptToS && !isInputChecked) {
+    submitButton.disabled = true;
+  } else if (checkboxToAcceptToS && isInputChecked) {
+    submitButton.disabled = false;
+  } else if (!checkboxToAcceptToS && !isInputChecked) {
+    formDataValidation.knowMore = false;
+  } else {
+    formDataValidation.knowMore = true;
+  }
 }
 
 function changeInputStyle(element, classToBeRemoved, classToBeAdded) {
@@ -256,13 +291,22 @@ function changeInputStyle(element, classToBeRemoved, classToBeAdded) {
 }
 
 class UserInfos {
-  constructor(firstName, lastName, email, dateOfBirth, quantity, location) {
+  constructor(
+    firstName,
+    lastName,
+    email,
+    dateOfBirth,
+    quantity,
+    location,
+    knowMore
+  ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.dateOfBirth = dateOfBirth;
     this.quantity = quantity;
     this.location = location;
+    this.knowMore = knowMore;
   }
 }
 
@@ -295,7 +339,11 @@ function validate(e) {
   }
 
   for (const prop in formDataValidation) {
-    result.push(formDataValidation[prop]);
+    if (prop === "knowMore") {
+      continue;
+    } else {
+      result.push(formDataValidation[prop]);
+    }
   }
 
   let invalidInputsArray = result.filter((inputBool) => {
@@ -316,12 +364,19 @@ function validate(e) {
       valueOfEmail,
       valueOfDateOfBirth,
       valueOfQuantity,
-      valueOfLocation
+      valueOfLocation,
+      formDataValidation.knowMore
     );
 
     console.log(userInfos);
     //callAPI(userInfos);
     alert("Merci d'avoir rempli le formulaire!");
+
+    this.classList.add("hide");
+    validFormMessageElement.classList.remove("hide");
+    contentElement.classList.add("show-center-flex");
+    validFormMessageElement.textContent = "Merci pour votre inscription";
+    validFormCloseModalButton.classList?.remove("hide");
     return;
   } else {
     alert("Attention, le formulaire est invalide!");

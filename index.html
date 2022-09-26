@@ -28,11 +28,11 @@
 </head>
 
 <body>
-  <div class="topnav" id="myTopnav">
+  <header class="topnav" id="myTopnav">
     <div class="header-logo">
       <img alt="logo" src="./images/Logo.png" />
     </div>
-    <div class="main-navbar">
+    <nav class="main-navbar">
 
       <a href="#" class="active"><span>Accueil</span></a>
       <a href="#"><span>Détails de l'évènement</span></a>
@@ -42,12 +42,14 @@
       <a href="#" class="icon">
         <i class="fa fa-bars"></i>
       </a>
-    </div>
-  </div>
-  </div>
+    </nav>
+  </header>
+
+
+  <!-- </div> -->
   <main>
     <div class="hero-section">
-      <div class="hero-content">
+      <section class="hero-content">
         <h1 class="hero-headline">
           Marathon national<br>
           de jeux vidéos
@@ -59,7 +61,7 @@
         <button class="btn-signup modal-btn">
           Je M'inscris
         </button>
-      </div>
+      </section>
       <div class="hero-img">
         <img src="./images/bg_img.jpg" alt="img" />
       </div>
@@ -79,7 +81,7 @@
             </div>
             <div class="formData">
               <label for="last">Nom</label><br>
-              <input class="text-control" type="text" id="last" name="last" /><br>
+              <input class="text-control" type="text" id="last" name="last" minlength="2" /><br>
             </div>
             <div class="formData">
               <label for="email">E-mail</label><br>
@@ -91,7 +93,7 @@
             </div>
             <div class="formData">
               <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
-              <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
+              <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99" value="0">
             </div>
             <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
             <div class="formData">
@@ -124,13 +126,14 @@
             </div>
 
             <div class="formData">
-              <input class="checkbox-input terms-of-service-checkbox" type="checkbox" id="checkbox1" checked />
+              <input class="checkbox-input terms-of-service-checkbox" type="checkbox" id="checkbox1" checked
+                name="checkbox" />
               <label class="checkbox2-label" for="checkbox1" required>
                 <span class="checkbox-icon"></span>
                 J'ai lu et accepté les conditions d'utilisation.
               </label>
               <br>
-              <input class="checkbox-input" type="checkbox" id="checkbox2" />
+              <input class="checkbox-input" type="checkbox" id="checkbox2" name="checkbox" />
               <label class="checkbox2-label" for="checkbox2">
                 <span class="checkbox-icon"></span>
                 Je Je souhaite être prévenu des prochains évènements.
@@ -139,6 +142,10 @@
             </div>
             <button class="btn-submit button" type="submit">C'est parti</button>
           </form>
+          <h2 class="valid-form-message hide"></h2>
+          <div class="button-container">
+            <button type="button" class="button close-modal-button hide">Fermer</button>
+          </div>
         </div>
       </div>
     </div>

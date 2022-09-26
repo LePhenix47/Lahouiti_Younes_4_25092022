@@ -55,6 +55,14 @@ img {
   padding-right: 1rem;
 }
 
+label:hover {
+  cursor: pointer;
+}
+
+h2 {
+  font-weight: 400;
+  text-align: center;
+}
 
 .topnav {
   overflow: hidden;
@@ -213,6 +221,7 @@ main {
 .content {
   width: 100%;
   max-width: 500px;
+  min-height: 750px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
   background: #232323;
@@ -611,6 +620,13 @@ Classes ajoutées par Younes LAHOUITI
   align-items: center;
 }
 
+.show-space-around-flex {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
 
 .close-modal {
   animation-name: modalopen;
@@ -643,4 +659,24 @@ Classes ajoutées par Younes LAHOUITI
 
 .error-form-data-bg {
   background-color: var(--input-bg-color--invalid);
+}
+
+.close-modal-button {
+  border: none;
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% 550%;
+}
+
+.button-container {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.modal-body {
+  position: relative;
 }
