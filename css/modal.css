@@ -9,7 +9,7 @@
   --input-bg-color--invalid: #430000;
   --input-outline-color--invalid: red;
 
-  --input-bg-color--valid: rgb(0, 67, 0);
+  --input-bg-color--valid: #004300;
   --input-outline-color--valid: limegreen;
 
   --input-text-color: white;
