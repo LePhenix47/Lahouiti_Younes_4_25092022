@@ -64,6 +64,10 @@ h2 {
   text-align: center;
 }
 
+span:hover {
+  cursor: pointer;
+}
+
 .topnav {
   overflow: hidden;
   margin: 3.5%;
@@ -342,6 +346,7 @@ input {
   opacity: 1;
   cursor: pointer;
   transform: scale(0.7);
+  z-index: 2;
 }
 
 .close:before,
