@@ -65,6 +65,7 @@ const validFormCloseModalButton = document.querySelector(
 
 const contentElement = document.querySelector(".content");
 
+//This array will give the event listener for each input in a for loop
 let inputsArray = [
   firstNameInput,
   lastNameInput,
@@ -119,6 +120,7 @@ for (input of inputsArray) {
   input.addEventListener("blur", handleInputs);
 }
 
+//This function will call a specitfic function to validate the input & to stock its value in a variable
 function handleInputs() {
   console.log(this);
   const nameAttributeOfInput = this.getAttribute("name");
@@ -180,6 +182,11 @@ function handleInputs() {
   }
 }
 
+/* 
+Here are the functions to verify each input
+*/
+
+//Inputs for the first and last name
 function verifyName(inputElement, nameAttributeOfInput, paragraphElement) {
   let valueOfInput = inputElement.value;
   let inputIsFilled = valueOfInput !== "";
@@ -205,6 +212,7 @@ function verifyName(inputElement, nameAttributeOfInput, paragraphElement) {
   }
 }
 
+//Input for the
 function verifyEmail(inputElement, paragraphElement) {
   let valueOfInput = inputElement.value;
   let inputIsFilled = valueOfInput !== "";
@@ -220,7 +228,7 @@ function verifyEmail(inputElement, paragraphElement) {
     paragraphElement.textContent = "Veuillez rentrer un email valide";
   }
 }
-
+//Input for the
 function verifyDateOfBirth(inputElement, paragraphElement) {
   let valueOfInput = inputElement.valueAsDate;
   let inputIsFilled = valueOfInput !== null;
@@ -262,7 +270,7 @@ function verifyDateOfBirth(inputElement, paragraphElement) {
     paragraphElement.textContent = "Veuillez saisir une date valide";
   }
 }
-
+//Input for the quantity
 function verifyQuantity(inputElement, paragraphElement) {
   let valueOfInput = inputElement.valueAsNumber;
 
@@ -278,7 +286,7 @@ function verifyQuantity(inputElement, paragraphElement) {
     paragraphElement.textContent = "Veuillez renter une valeur entre 0 et 99";
   }
 }
-
+//Inputs for the Terms of service and the "Want to know more"
 function verifyTermsOfServiceCheckbox(inputElement) {
   let isInputChecked = inputElement.checked;
   let checkboxToAcceptToS = inputElement.classList.contains(
@@ -295,11 +303,13 @@ function verifyTermsOfServiceCheckbox(inputElement) {
   }
 }
 
+//Function to change the style of an element by removing a class and adding another
 function changeInputStyle(element, classToBeRemoved, classToBeAdded) {
   element.classList.remove(classToBeRemoved);
   element.classList.add(classToBeAdded);
 }
 
+//Class that adds will create the object with the correct values from the form
 class UserInfos {
   constructor(
     firstName,
@@ -321,6 +331,8 @@ class UserInfos {
 }
 
 form.addEventListener("submit", validate);
+
+//Function that will validate the entire form
 function validate(e) {
   e.preventDefault();
 
@@ -393,12 +405,11 @@ function validate(e) {
       contentElement.classList.remove("shake-animation");
       console.log("removing the animation");
     }, 650);
-
-    //Ajouter une animation
   }
 }
 
 /* 
+For the future of this project:
 
 async function callAPI(data){
   try{
