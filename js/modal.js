@@ -22,6 +22,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 //Part 1 Fixing the modal
 function launchModal() {
   modalbg.classList.replace("hide", "show-center-flex");
+  modalbg.classList.add("open-modal");
   const closeModalButton = document.getElementsByClassName("close")[0];
 
   closeModalButton.addEventListener("click", closeModal);
@@ -119,25 +120,30 @@ for (input of inputsArray) {
 function handleInputs() {
   console.log(this);
   const nameAttributeOfInput = this.getAttribute("name");
+  let paragraphElement = this.parentElement.querySelector(
+    ".paragraph-error-msg"
+  );
+
+  console.log(paragraphElement);
 
   switch (nameAttributeOfInput) {
     case "first": {
       console.log("first name");
-      verifyName(this, nameAttributeOfInput);
+      verifyName(this, nameAttributeOfInput, paragraphElement);
       console.log(formDataValidation);
       break;
     }
 
     case "last": {
       console.log("last name");
-      verifyName(this, nameAttributeOfInput);
+      verifyName(this, nameAttributeOfInput, paragraphElement);
       console.log(formDataValidation);
 
       break;
     }
     case "email": {
       console.log("email");
-      verifyEmail(this);
+      verifyEmail(this, paragraphElement);
       console.log(formDataValidation);
 
       break;
@@ -145,14 +151,14 @@ function handleInputs() {
 
     case "birthdate": {
       console.log("birthdate");
-      verifyDateOfBirth(this);
+      verifyDateOfBirth(this, paragraphElement);
       console.log(formDataValidation);
       break;
     }
 
     case "quantity": {
       console.log("quantity");
-      verifyQuantity(this);
+      verifyQuantity(this, paragraphElement);
       console.log(formDataValidation);
       break;
     }
@@ -172,7 +178,7 @@ function handleInputs() {
   }
 }
 
-function verifyName(inputElement, nameAttributeOfInput) {
+function verifyName(inputElement, nameAttributeOfInput, paragraphElement) {
   let valueOfInput = inputElement.value;
   let inputIsFilled = valueOfInput !== "";
   let inputIsOverTwoCharactersLong = valueOfInput.length >= 2;
@@ -184,21 +190,20 @@ function verifyName(inputElement, nameAttributeOfInput) {
     nameAttributeOfInput === "first"
       ? (formDataValidation.first = true) & (valueOfFirstName = valueOfInput)
       : (formDataValidation.last = true) & (valueOfLastName = valueOfInput);
-    inputElement.setCustomValidity("");
+    paragraphElement.textContent = "";
   } else {
     changeInputStyle(inputElement, "valid-input", "invalid-input");
     nameAttributeOfInput === "first"
       ? (formDataValidation.first = false)
       : (formDataValidation.last = false);
-    inputElement.setCustomValidity(
-      `Veuillez rentrer un ${
-        nameAttributeOfInput === "first" ? "prénom" : "nom"
-      } avec au moins 2 caractères`
-    );
+
+    paragraphElement.textContent = `Veuillez rentrer un ${
+      nameAttributeOfInput === "first" ? "prénom" : "nom"
+    } avec au moins 2 caractères`;
   }
 }
 
-function verifyEmail(inputElement) {
+function verifyEmail(inputElement, paragraphElement) {
   let valueOfInput = inputElement.value;
   let inputIsFilled = valueOfInput !== "";
 
@@ -206,15 +211,15 @@ function verifyEmail(inputElement) {
     valueOfEmail = valueOfInput;
     formDataValidation.email = true;
     changeInputStyle(inputElement, "invalid-input", "valid-input");
-    inputElement.setCustomValidity("");
+    paragraphElement.textContent = "";
   } else {
     changeInputStyle(inputElement, "valid-input", "invalid-input");
     formDataValidation.email = false;
-    inputElement.setCustomValidity("Veuillez rentrer un email");
+    paragraphElement.textContent = "Veuillez rentrer un email valide";
   }
 }
 
-function verifyDateOfBirth(inputElement) {
+function verifyDateOfBirth(inputElement, paragraphElement) {
   let valueOfInput = inputElement.valueAsDate;
   let inputIsFilled = valueOfInput !== null;
 
@@ -225,9 +230,10 @@ function verifyDateOfBirth(inputElement) {
 
     if (ageOfUserInYears < 0) {
       changeInputStyle(inputElement, "valid-input", "invalid-input");
-      inputElement.setCustomValidity(
-        "Veuillez saisir une date valide inférieure à la date actuelle"
-      );
+
+      paragraphElement.textContent =
+        "Veuillez saisir une date valide inférieure à la date actuelle";
+
       return;
     }
 
@@ -237,24 +243,25 @@ function verifyDateOfBirth(inputElement) {
 
     if (!isUserOverEighteen) {
       changeInputStyle(inputElement, "valid-input", "invalid-input");
-      inputElement.setCustomValidity(
-        "L'évènement requiert à ce que les personnes inscrites soient majeures"
-      );
+
+      paragraphElement.textContent =
+        "L'évènement requiert à ce que les personnes inscrites soient majeures";
+
       return;
     }
     valueOfDateOfBirth = valueOfInput;
 
     formDataValidation.dateOfBirth = isUserOverEighteen;
     changeInputStyle(inputElement, "invalid-input", "valid-input");
-    inputElement.setCustomValidity("");
+    paragraphElement.textContent = "";
   } else {
     changeInputStyle(inputElement, "valid-input", "invalid-input");
     formDataValidation.dateOfBirth = isUserOverEighteen;
-    inputElement.setCustomValidity("Veuillez saisir une date valide");
+    paragraphElement.textContent = "Veuillez saisir une date valide";
   }
 }
 
-function verifyQuantity(inputElement) {
+function verifyQuantity(inputElement, paragraphElement) {
   let valueOfInput = inputElement.valueAsNumber;
 
   if (valueOfInput >= 0 && valueOfInput < 100) {
@@ -262,10 +269,11 @@ function verifyQuantity(inputElement) {
     formDataValidation.quantity = true;
     changeInputStyle(inputElement, "invalid-input", "valid-input");
     inputElement.setCustomValidity("");
+    paragraphElement.textContent = "";
   } else {
     changeInputStyle(inputElement, "valid-input", "invalid-input");
     formDataValidation.quantity = false;
-    inputElement.setCustomValidity("Veuillez renter une valeur entre 0 et 99");
+    paragraphElement.textContent = "Veuillez renter une valeur entre 0 et 99";
   }
 }
 
@@ -286,7 +294,7 @@ function verifyTermsOfServiceCheckbox(inputElement) {
 }
 
 function changeInputStyle(element, classToBeRemoved, classToBeAdded) {
-  element.classList?.remove(classToBeRemoved);
+  element.classList.remove(classToBeRemoved);
   element.classList.add(classToBeAdded);
 }
 
@@ -370,16 +378,21 @@ function validate(e) {
 
     console.log(userInfos);
     //callAPI(userInfos);
-    alert("Merci d'avoir rempli le formulaire!");
 
     this.classList.add("hide");
     validFormMessageElement.classList.remove("hide");
     contentElement.classList.add("show-center-flex");
     validFormMessageElement.textContent = "Merci pour votre inscription";
-    validFormCloseModalButton.classList?.remove("hide");
+    validFormCloseModalButton.classList.remove("hide");
     return;
   } else {
-    alert("Attention, le formulaire est invalide!");
+    contentElement.classList.add("shake-animation");
+    setTimeout(() => {
+      contentElement.classList.remove("shake-animation");
+      console.log("removing the animation");
+    }, 650);
+
+    //Ajouter une animation
   }
 }
 
