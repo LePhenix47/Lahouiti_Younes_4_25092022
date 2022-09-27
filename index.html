@@ -57,18 +57,18 @@
           de jeux vidéos
         </h1>
         <p class="hero-text">
-          Vous aimez jouer ? Notre prochain évènement gaming est ouvert
+          Vous aimez jouer ? <br /> Notre prochain évènement gaming est ouvert
           aux réservations... Places limitées !
         </p>
         <button class="btn-signup modal-btn">
-          Je M'inscris
+          Je m'inscris
         </button>
       </section>
       <div class="hero-img">
         <img src="./images/bg_img.jpg" alt="img" />
       </div>
       <button class="btn-signup modal-btn">
-        Je M'inscris
+        Je m'inscris
       </button>
     </div>
 
@@ -80,22 +80,27 @@
             <div class="formData">
               <label for="first">Prénom</label><br>
               <input class="text-control" type="text" id="first" name="first" minlength="2" /><br>
+              <p class="paragraph-error-msg"></p>
             </div>
             <div class="formData">
               <label for="last">Nom</label><br>
               <input class="text-control" type="text" id="last" name="last" minlength="2" /><br>
+              <p class="paragraph-error-msg"></p>
             </div>
             <div class="formData">
               <label for="email">E-mail</label><br>
               <input class="text-control" type="email" id="email" name="email" /><br>
+              <p class="paragraph-error-msg"></p>
             </div>
             <div class="formData">
               <label for="birthdate">Date de naissance</label><br>
               <input class="text-control" type="date" id="birthdate" name="birthdate" /><br>
+              <p class="paragraph-error-msg"></p>
             </div>
             <div class="formData">
               <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
               <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99" value="0">
+              <p class="paragraph-error-msg"></p>
             </div>
             <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
             <div class="formData">
@@ -128,8 +133,7 @@
             </div>
 
             <div class="formData">
-              <input class="checkbox-input terms-of-service-checkbox" type="checkbox" id="checkbox1" checked
-                name="checkbox" />
+              <input class="checkbox-input terms-of-service-checkbox" type="checkbox" id="checkbox1" name="checkbox" />
               <label class="checkbox2-label" for="checkbox1" required>
                 <span class="checkbox-icon"></span>
                 J'ai lu et accepté les conditions d'utilisation.
@@ -138,11 +142,11 @@
               <input class="checkbox-input" type="checkbox" id="checkbox2" name="checkbox" />
               <label class="checkbox2-label" for="checkbox2">
                 <span class="checkbox-icon"></span>
-                Je Je souhaite être prévenu des prochains évènements.
+                Je souhaite être prévenu des prochains évènements.
               </label>
               <br>
             </div>
-            <button class="btn-submit button" type="submit">C'est parti</button>
+            <button class="btn-submit button" type="submit" disabled>C'est parti</button>
           </form>
           <h2 class="valid-form-message hide"></h2>
           <div class="button-container">
