@@ -117,7 +117,6 @@ validFormCloseModalButton.addEventListener("click", closeModal);
 
 for (input of inputsArray) {
   input.addEventListener("change", handleInputs);
-  input.addEventListener("blur", handleInputs);
 }
 
 //This function will call a specitfic function to validate the input & to stock its value in a variable
