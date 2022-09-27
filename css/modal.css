@@ -813,3 +813,34 @@ Classes ajoutées par Younes LAHOUITI
 .form {
   margin-top: 30px;
 }
+
+@-webkit-keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  -webkit-animation-name: fade-out;
+  animation-name: fade-out;
+  -webkit-animation-duration: var(--modal-duration);
+  animation-duration: var(--modal-duration);
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}

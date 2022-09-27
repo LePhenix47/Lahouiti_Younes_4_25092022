@@ -29,11 +29,13 @@ function launchModal() {
 }
 
 function closeModal() {
-  modalbg.classList.add("close-modal");
+  contentElement.classList.add("close-modal");
+  modalbg.classList.add("fade-out");
 
   setTimeout(() => {
+    contentElement.classList.remove("close-modal");
     modalbg.classList.replace("show-center-flex", "hide");
-    modalbg.classList.remove("close-modal");
+    modalbg.classList.remove("fade-out");
   }, 800);
 }
 
