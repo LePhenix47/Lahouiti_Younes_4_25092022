@@ -581,8 +581,8 @@ footer {
   }
 
   .hero-content {
-    background: #fff;
-    color: #000;
+    background: var(--body-bg-color);
+    color: var(--text-color);
     padding: 0px;
     display: flex;
     flex-direction: column;
