@@ -272,11 +272,12 @@ function verifyDateOfBirth(inputElement, paragraphElement) {
 }
 //Input for the quantity
 function verifyQuantity(inputElement, paragraphElement) {
-  let valueOfInput = inputElement.valueAsNumber;
+  let valueOfInput = Math.trunc(inputElement.valueAsNumber);
 
   if (valueOfInput >= 0 && valueOfInput < 100) {
     valueOfQuantity = valueOfInput;
     formDataValidation.quantity = true;
+    inputElement.valueAsNumber = valueOfInput;
     changeInputStyle(inputElement, "invalid-input", "valid-input");
     inputElement.setCustomValidity("");
     paragraphElement.textContent = "";
