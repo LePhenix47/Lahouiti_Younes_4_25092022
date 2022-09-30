@@ -23,7 +23,8 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   modalbg.classList.replace("hide", "show-center-flex");
   modalbg.classList.add("open-modal");
-  const closeModalButton = document.getElementsByClassName("close")[0];
+
+  const closeModalButton = document.querySelector(".close");
 
   closeModalButton.addEventListener("click", closeModal);
 }
